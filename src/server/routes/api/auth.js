@@ -46,8 +46,6 @@ async function register(ctx, next) {
                 name,
                 email
             });
-            console.warn('usr', User);
-            // TODO handle password
             user.password = user.generateHash(password);
             await user.save();
 

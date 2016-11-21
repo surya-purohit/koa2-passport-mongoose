@@ -1,6 +1,5 @@
 import passport from 'koa-passport';
 import compose from 'koa-compose';
-import importDir from 'import-dir';
 import User from '../models/User';
 import jwt from 'jsonwebtoken';
 import { auth as config, facebook as FacebookConfig, twitter as TwitterConfig } from './config';
@@ -92,7 +91,7 @@ export function isFacebookAuthenticated() {
 export function isFacebookAuthenticatedCallback() {
     return async(ctx, next) => {
         var callbackOpts = await JSON.parse(base64url.decode(ctx.request.query.state));
-        await passport.authenticate('facebook', function(user, err, info) {
+        await passport.authenticate('facebook', function(user, info) {
             if (user) {
                 ctx.redirect(callbackOpts.successRedirect);
             } else {
@@ -114,7 +113,7 @@ export function isTwitterAuthenticated() {
 export function isTwitterAuthenticatedCallback() {
     return async(ctx, next) => {
         var callbackOpts = ctx.request.query;
-        await passport.authenticate('twitter', function(user, err, info) {
+        await passport.authenticate('twitter', function(user, info) {
             if (user) {
                 ctx.redirect(callbackOpts.success_redirect);
             } else {
@@ -139,7 +138,7 @@ export function isInstagramAuthenticated() {
 export function isInstagramAuthenticatedCallback() {
     return async(ctx, next) => {
         var callbackOpts = await JSON.parse(base64url.decode(ctx.request.query.state));
-        await passport.authenticate('instagram', function(user, err, info) {
+        await passport.authenticate('instagram', function(user, info) {
             if (user) {
                 ctx.redirect(callbackOpts.successRedirect);
             } else {
@@ -164,7 +163,7 @@ export function isGithubAuthenticated() {
 export function isGithubAuthenticatedCallback() {
     return async(ctx, next) => {
         var callbackOpts = await JSON.parse(base64url.decode(ctx.request.query.state));
-        await passport.authenticate('github', function(user, err, info) {
+        await passport.authenticate('github', function(user, info) {
             if (user) {
                 ctx.redirect(callbackOpts.successRedirect);
             } else {
@@ -186,7 +185,7 @@ export function isLinkedinAuthenticated() {
 export function isLinkedinAuthenticatedCallback() {
     return async(ctx, next) => {
         var callbackOpts = ctx.request.query;
-        await passport.authenticate('linkedin', function(user, err, info) {
+        await passport.authenticate('linkedin', function(user, info) {
             if (user) {
                 ctx.redirect(callbackOpts.success_redirect);
             } else {
@@ -212,7 +211,7 @@ export function isGoogleAuthenticated() {
 export function isGoogleAuthenticatedCallback(ctx, next) {
     return async(ctx, next) => {
         var callbackOpts = await JSON.parse(base64url.decode(ctx.request.query.state));
-        await passport.authenticate('google', function(user, err, info) {
+        await passport.authenticate('google', function(user, info) {
             if (user) {
                 ctx.redirect(callbackOpts.successRedirect);
             } else {
@@ -236,12 +235,16 @@ export function findOrCreate(query, newFields, done) {
                 }
                 user = new User(newUser);
                 user.save(err => {
-                    if (err) console.log(err);
-                    return done(err, user);
+                    if (err) {
+                        console.log(err);
+                        return done(err, user, {'message': 'Error while saving the user.'});
+                    } else {
+                        return done(err, user, {'message': 'User successfully saved.'});
+                    }
                 });
             } else {
                 //found user. Return
-                return done(err, user);
+                return done(err, user, {'message': 'User found.'});
             }
         });
     } catch (err) {

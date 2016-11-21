@@ -8,17 +8,15 @@ export default new CustomStrategy(async(ctx, done) => {
         if (ctx.body.email && ctx.body.password) {
             const user = await User.findOne({ email: ctx.body.email.toLowerCase() });
 
-            if (!user) { done(null, false); }
+            if (!user) { done(null, false, {'message': 'User not found.'}); }
             const password = ctx.body.password;
-            console.log(user.validPassword(password))
             if (!user.validPassword(password))
-                return done(null, false);
+                return done(null, false, {'message': 'Password not correct.'});
             
-            // TODO - check password
             done(null, user);
 
         } else {
-            done(null, false);
+            done(null, false, {'message': 'Email and Password are required.'});
         }
     } catch (error) {
         done(error);
