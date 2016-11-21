@@ -5,7 +5,6 @@ import { findOrCreate } from '../'
 export default new FacebookStrategy(FacebookConfig,
     async(token, tokenSecret, profile, done)=> {
         // retrieve user ...
-        console.log("useruserusreusrer");
         process.nextTick(() => {
             //check user table for anyone with a facebook ID of profile.id
             const newUser = {};

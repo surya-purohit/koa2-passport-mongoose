@@ -1,6 +1,6 @@
 {
   "name": "koa2-passport-mongoose",
-  "version": "2.0.0",
+  "version": "1.0.0",
   "description": "Koa 2 server with passport and mongoose",
   "main": "./src/init.js",
   "repository": {
@@ -12,6 +12,7 @@
     "@risingstack/graffiti": "^3.0.4",
     "@risingstack/graffiti-mongoose": "^5.1.0",
     "aws-sdk": "^2.3.0",
+    "bcrypt-nodejs": "0.0.3",
     "bcrypt-nodejs-as-promised": "^1.0.4",
     "es6-promise": "^3.1.2",
     "graphql": "^0.6.1",
@@ -74,6 +75,6 @@
     "supertest-as-promised": "^3.0.0"
   },
   "scripts": {
-    "start": "sudo nodemon ./src/init.js",
+    "start": "sudo nodemon ./src/init.js"
   }
 }

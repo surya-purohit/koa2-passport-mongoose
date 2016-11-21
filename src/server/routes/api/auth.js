@@ -25,7 +25,7 @@ export default (router) => {
     router.get('/auth/google', isGoogleAuthenticated());
     router.get('/auth/google/callback', isGoogleAuthenticatedCallback());
     router.get('/auth/twitter', isTwitterAuthenticated());
-    router.get('/auth/twitter/callback', isTwitterAuthenticatedCallback(), async(ctx, next)=>{console.log("ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd", ctx.request.query.state)});
+    router.get('/auth/twitter/callback', isTwitterAuthenticatedCallback());
     router.get('/auth/instagram', isInstagramAuthenticated());
     router.get('/auth/instagram/callback', isInstagramAuthenticatedCallback());
     router.get('/auth/github', isGithubAuthenticated());
@@ -35,7 +35,6 @@ export default (router) => {
 };
 
 async function register(ctx, next) {
-    console.log("register");
     const { name, email, password } = ctx.request.body;
 
     // TODO - improve validation
@@ -47,9 +46,9 @@ async function register(ctx, next) {
                 name,
                 email
             });
-
+            console.warn('usr', User);
             // TODO handle password
-
+            user.password = user.generateHash(password);
             await user.save();
 
             ctx.passport = {

@@ -5,7 +5,6 @@ import { findOrCreate } from '../'
 export default new GoogleStrategy(GoogleConfig,
     function(token, tokenSecret, profile, done) {
         // retrieve user ...
-        console.log(token, tokenSecret, profile);
         process.nextTick(() => {
             //check user table for anyone with a google ID of profile.id
             const newUser = {};

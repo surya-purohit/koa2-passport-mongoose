@@ -5,7 +5,6 @@ import { findOrCreate } from '../'
 export default new InstagramStrategy(InstagramConfig,
     function(token, tokenSecret, profile, done) {
         // retrieve user ...
-        console.log(profile);
         process.nextTick(() => {
             //check user table for anyone with a instagram ID of profile.id
             const newUser = {};

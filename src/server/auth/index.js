@@ -53,7 +53,6 @@ export function isAuthenticated() {
 }
 
 export function authEmail() {
-    console.log("authemil");
     return passport.authenticate('email');
 }
 

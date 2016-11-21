@@ -15,6 +15,5 @@ export default function routes() {
 
     return [router.routes(), router.allowedMethods(), ...prev];
   }, []);
-  console.log(composed);
   return compose(composed);
 }
