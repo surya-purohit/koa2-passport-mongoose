@@ -1,4 +1,4 @@
-# Koa 2 + Passport + Mongoose + GraphQL
+# Koa 2 + Passport + Mongoose
 
 [![Build Status](https://travis-ci.org/sibelius/koa-passport-mongoose-graphql.svg?branch=master)](https://travis-ci.org/sibelius/koa-passport-mongoose-graphql)
 
